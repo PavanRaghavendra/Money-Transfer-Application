@@ -1,0 +1,142 @@
+const bcrypt=require("bcrypt");
+const express=require("express");
+const zod=require("zod");
+const router=express.Router();
+const jwt=require("jsonwebtoken");
+const JWT_secret=require("../config");
+const Usermiddleware=require("../middleware/Middlewares");
+const database=require("../middleware/Database")
+const {User}=require("../Database/db");
+const {Account}=require("../Database/db");
+const authmiddle = require("../middleware/Authmiddle");
+const app=express();
+app.use(express.json());
+router.post("/Signup",Usermiddleware,database,async (req,res)=>{
+    const password=req.body.password;
+    const hash = await bcrypt.hash(password,10);
+    const user=await User.create({
+        username:req.body.username,
+        password:hash,
+        firstname:req.body.firstname,
+        lastname:req.body.lastname
+    })
+    const userId=user._id;
+    await Account.create(
+        {
+            userid:userId,
+            balance:1+Math.random()*10000
+        }
+    )
+    const token=jwt.sign({userId},JWT_secret);
+    res.status(200).json(
+        {
+            message:"User Created Sucessfully",
+            token:token
+        }
+    )
+});
+const siginbody=zod.object(
+    {
+        username:zod.string().email(),
+        password:zod.string()
+    }
+)
+router.post("/Signin",async (req,res)=>{
+    const password=req.body.password;
+    const {success}=siginbody.safeParse(req.body);
+    if(!success)
+    {
+        return res.status(411).json(
+            {
+                msg:"Incorrect inputs"
+            }
+        )
+    }
+    const exisitinguser=await User.findOne(
+        {
+            username:req.body.username
+        }
+    );
+    if(exisitinguser)
+    {
+        const isvalid=await bcrypt.compare(password,exisitinguser.password);
+        if(isvalid)
+        {
+        const userId=exisitinguser._id;
+        const token=jwt.sign({userId},JWT_secret);
+        return res.status(200).json({
+            token:token
+        })
+    }
+    if(!isvalid)
+    {
+        return res.status(411).json({
+            mag:"Wrong password"
+        })
+    }
+    }
+    return res.status(411).json({
+        message:"Error While logging in"
+    })
+});
+const Updatebody=zod.object({
+    username:zod.string(),
+    password:zod.string().min(6),
+    firstname:zod.string(),
+    lastname:zod.string()
+})
+router.put("/update",authmiddle,async (req,res)=>
+{
+    const {success}=Updatebody.safeParse(req.body);
+        if (!success) {
+            res.status(411).json({
+                message: "Error while updating information"
+            })
+        }
+        const exisitinguser=await User.findOne(
+            {
+                username:req.body.username
+            }
+        );
+        if(exisitinguser){
+            const password=req.body.password;
+            const hash = await bcrypt.hash(password,10);
+            password=hash
+        await User.updateOne(req.body, {
+            _id: req.userId
+        })
+        res.json({
+            message: "Updated successfully"
+        })
+    }
+    return res.status(411).json(
+        {
+            msg:"user doesn't find in database plzzz signup.."
+        }
+    )
+});
+router.get("/bulk", async (req, res) => {
+    const filter = req.query.filter || "";
+    
+    try {
+        const users = await User.find({
+            "$or": [
+                { firstname: { "$regex": filter, "$options": "i" } }, //  i-means Case-insensitive search
+                { lastname: { "$regex": filter, "$options": "i" } }
+            ]
+        });
+
+        res.json({
+            users: users.map(user => ({
+                username: user.username,
+                firstname: user.firstname,
+                lastname: user.lastname,
+                _id: user._id
+            }))
+        });
+    } catch (error) {
+        console.error("Error:", error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+});
+module.exports=router;
