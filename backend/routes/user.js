@@ -85,7 +85,7 @@ const Updatebody=zod.object({
     firstname:zod.string(),
     lastname:zod.string()
 })
-router.put("/update",authmiddle,async (req,res)=>
+router.put("/update",async (req,res)=>
 {
     const {success}=Updatebody.safeParse(req.body);
         if (!success) {

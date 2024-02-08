@@ -2,15 +2,24 @@
 const express = require('express');
 const { Account } = require('../Database/db');
 const {mongoose } = require('mongoose');
+const authmiddle = require('../middleware/Authmiddle');
 
 const router = express.Router();
 
-router.get("/balance", async (req, res) => {
+router.get("/balance",authmiddle,async (req, res) => {
     const account = await Account.findOne({
-        userId: req.userId
+        userId:req.userId
     });
-
-    res.json({
+    if(account===null)
+    {
+      return  res.status(404).json(
+            {
+                message:'Account not found',
+                userId:req.userId,
+            }
+        )
+    }
+    res.status(200).json({
         balance: account.balance
     })
 });
@@ -44,7 +53,11 @@ router.post("/transfer",async (req,res)=>{
 
     // Commit the transaction
     await session.commitTransaction();
-    console.log("done")
+    res.status(200).json(
+        {
+            message:"Transfer successful"
+        }
+    )
 }
 );
 module.exports = router;
