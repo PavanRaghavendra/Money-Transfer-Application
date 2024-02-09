@@ -44,6 +44,7 @@ const siginbody=zod.object(
 router.post("/Signin",async (req,res)=>{
     const password=req.body.password;
     const {success}=siginbody.safeParse(req.body);
+    try{
     if(!success)
     {
         return res.status(411).json(
@@ -75,9 +76,13 @@ router.post("/Signin",async (req,res)=>{
         })
     }
     }
+}
+catch(error)
+{
     return res.status(411).json({
         message:"Error While logging in"
     })
+}
 });
 const Updatebody=zod.object({
     username:zod.string(),
@@ -135,7 +140,6 @@ router.get("/bulk", async (req, res) => {
             }))
         });
     } catch (error) {
-        console.error("Error:", error);
         res.status(500).json({ message: "Internal Server Error" });
     }
 });

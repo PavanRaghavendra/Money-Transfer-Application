@@ -2,18 +2,19 @@ const JWT_secret=require("../config");
 const jwt=require("jsonwebtoken");
 const authmiddle=(async (req,res,next)=>
 {
-    const headers=req.Headers.authorization;
-    if(!headers)
+    const authToken = req.headers.authorization; 
+    if(authToken)
     {
-        res.status(411).json({});
-    }
-    const token = headers.split(' ')[1];
-    try {
+        const token = authToken.split(" ")[1];
+       // console.log(token);
         const decoded = jwt.verify(token, JWT_secret);
-        req.userId = decoded.userId;
+        req.userid = decoded.userId;
+        //console.log(req.userid);
         next();
-    } catch (err) {
-        return res.status(403).json({});
+    }
+    else
+    {
+        res.status(403).json({msg: "Authentication failed"});
     }
 })
 module.exports=authmiddle;
