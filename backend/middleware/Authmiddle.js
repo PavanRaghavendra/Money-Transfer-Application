@@ -5,7 +5,7 @@ const authmiddle=(async (req,res,next)=>
     const authToken = req.headers.authorization; 
     if(authToken)
     {
-        const token = authToken.split(" ")[1];
+        const token = authToken;
        // console.log(token);
         const decoded = jwt.verify(token, JWT_secret);
         req.userid = decoded.userId;
