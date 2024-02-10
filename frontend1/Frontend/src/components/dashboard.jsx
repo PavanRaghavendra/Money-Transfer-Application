@@ -12,6 +12,7 @@ export function Dashboard()
 }
 function Appbar()
 {
+    const navigate=useNavigate();
     return <div className="shadow h-14 flex justify-between">
     <div className="flex flex-col justify-center h-full ml-4">
       <Link to="/dashboard">PayTM App</Link>
@@ -25,17 +26,37 @@ function Appbar()
                 U
             </div>
         </div>
+        <div className='flex justify-center items-center gap-3'>
+            <button className='bg-gray-500 text-white text-lg rounded-sm' onClick={()=>navigate("/signup")}>SignUp</button>
+            <button className='bg-yellow-500 text-lg text-white rounded-sm' onClick={()=>navigate("/Signin")}>SignIn</button>
+        </div>
     </div>
 </div>
 }
 function Balance()
 {
+    const [balance,setbalance]=useState("");
+    useEffect(()=>
+    {
+        async function balance()
+        {
+            const response=await axios.get("http://localhost:3001/api/accountdata/balance",
+            {
+                headers:
+                {
+                    authorization:localStorage.getItem("token")
+                }
+            })
+            setbalance(response.data.balance);
+        }
+        balance();
+    },[])
     return <div className="flex flex-row h-20 justify-center items-center shadow-md">
         <div className="ml-3 font-semibold">
             Your Balance
         </div>
         <div className="font-semibold ml-4">
-            $5000
+            {balance}
         </div>
     </div>
 }
