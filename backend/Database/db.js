@@ -1,5 +1,5 @@
 const mongoose=require("mongoose");
-mongoose.connect("mongodb://localhost:27017/UserTable");
+mongoose.connect("mongodb+srv://johnwick:oJ4g7oElkNQYlg3a@cluster0.keix9jl.mongodb.net/Payment");
 const UserSchema = new mongoose.Schema({
   username: {
     type: String,
