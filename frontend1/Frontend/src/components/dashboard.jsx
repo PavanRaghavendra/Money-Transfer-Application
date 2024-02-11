@@ -27,7 +27,7 @@ function Appbar()
             </div>
         </div>
         <div className='flex justify-center items-center gap-3'>
-            <button className='bg-gray-500 text-white text-lg rounded-sm' onClick={()=>navigate("/signup")}>SignUp</button>
+            <button className='bg-gray-500 text-white text-lg rounded-sm' onClick={()=>navigate("/")}>SignUp</button>
             <button className='bg-yellow-500 text-lg text-white rounded-sm' onClick={()=>navigate("/Signin")}>SignIn</button>
         </div>
     </div>
@@ -40,7 +40,7 @@ function Balance()
     {
         async function balance()
         {
-            const response=await axios.get("http://localhost:3001/api/accountdata/balance",
+            const response=await axios.get("https://money-wallet-api.vercel.app/api/accountdata/balance",
             {
                 headers:
                 {
@@ -69,7 +69,7 @@ function Users()
     {
         async function fetch()
         {
-            const response=await axios.get("http://localhost:3001/api/user/bulk?filter="+filter);
+            const response=await axios.get("https://money-wallet-api.vercel.app/api/user/bulk?filter="+filter);
             setUsers(response.data.users);
         }
         fetch();

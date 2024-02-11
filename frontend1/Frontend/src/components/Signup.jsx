@@ -37,7 +37,7 @@ export function Signup()
                 }}placeholder="" className="border-rose-200 rounded-sm w-full pl-2 pt-2 pb-1"></input>
                 <button onClick={ async ()=>
                 {
-                    const response=await axios.post("http://localhost:3001/api/user/Signup",{
+                    const response=await axios.post("https://money-wallet-api.vercel.app/api/user/Signup",{
                             firstname,
                             lastname,
                             username,
