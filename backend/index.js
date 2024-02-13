@@ -1,7 +1,20 @@
 const express=require("express");
-const cors=require("cors");
+//const cors=require("cors");
 const app=express();
-app.use(cors());
+//app.use(cors());
+app.use((req, res) => {
+    //set header first to allow request or origin domain (value can be different)
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, OPTIONS, DELETE');
+    if(req.method === 'OPTIONS') {
+        return res.status(200).json(({
+            body: "OK"
+        }))
+    }
+
+})
 const Mainrouter=require("./routes/routes")
 app.use(express.json());
 app.use("/api",Mainrouter);
