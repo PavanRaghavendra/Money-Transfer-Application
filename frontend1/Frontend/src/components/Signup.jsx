@@ -19,22 +19,22 @@ export function Signup()
                 <input onChange={(e)=>
                 {
                     setFirstname(e.target.value);
-                }}placeholder="John" className=" rounded-sm w-full pl-2 pt-2 pb-1 border-black-500"></input>
+                }}placeholder="John" className=" rounded-sm w-full pl-2 pt-2 pb-1 border border-black-500"></input>
                 <p className="text-left pb-1 font-semibold">Last Name</p>
                 <input  onChange={(e)=>
                 {
                     setLastname(e.target.value);
-                }} placeholder="Doe" className="border-rose-200 rounded-sm w-full pl-2 pt-2 pb-1"></input>
+                }} placeholder="Doe" className="border border-black-500 rounded-sm w-full pl-2 pt-2 pb-1"></input>
                 <p className="text-left pb-1 font-semibold">Email</p>
                 <input  onChange={(e)=>
                 {
                     setusername(e.target.value);
-                }}placeholder="johndoe@example.com" className="border-rose-200 rounded-sm w-full pl-2 pt-2 pb-1"></input>
+                }}placeholder="johndoe@example.com" className="border border-black-500 rounded-sm w-full pl-2 pt-2 pb-1"></input>
                 <p className="text-left pb-1 font-semibold">Password</p>
                 <input  onChange={(e)=>
                 {
                     setPassword(e.target.value);
-                }}placeholder="" className="border-rose-200 rounded-sm w-full pl-2 pt-2 pb-1"></input>
+                }}placeholder="" className="border border-black-500 rounded-sm w-full pl-2 pt-2 pb-1"></input>
                 <button onClick={ async ()=>
                 {
                     const response=await axios.post("https://money-wallet-api.vercel.app/api/user/Signup",{
