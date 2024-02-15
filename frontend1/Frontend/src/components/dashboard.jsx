@@ -15,7 +15,7 @@ function Appbar()
     const navigate=useNavigate();
     return <div className="shadow h-14 flex justify-between">
     <div className="flex flex-col justify-center h-full ml-4">
-      <Link to="/dashboard">PayTM App</Link>
+      <Link to="/dashboard">Pai-Payments App</Link>
     </div>
     <div className="flex">
         <div className="flex flex-col justify-center h-full mr-4">

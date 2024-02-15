@@ -3,12 +3,12 @@ const express=require("express");
 const zod=require("zod");
 const router=express.Router();
 const jwt=require("jsonwebtoken");
-const JWT_secret=require("../config");
 const Usermiddleware=require("../middleware/Middlewares");
 const database=require("../middleware/Database")
 const {User}=require("../Database/db");
 const {Account}=require("../Database/db");
 const authmiddle = require("../middleware/Authmiddle");
+require('dotenv').config();
 const app=express();
 app.use(express.json());
 router.post("/Signup",Usermiddleware,database,async (req,res)=>{
@@ -27,7 +27,7 @@ router.post("/Signup",Usermiddleware,database,async (req,res)=>{
             balance:1+Math.random()*10000
         }
     )
-    const token=jwt.sign({userId},JWT_secret);
+    const token=jwt.sign({userId},process.env.DATABASE_URL);
     res.status(200).json(
         {
             message:"User Created Sucessfully",
@@ -64,7 +64,7 @@ router.post("/Signin",async (req,res)=>{
         if(isvalid)
         {
         const userId=exisitinguser._id;
-        const token=jwt.sign({userId},JWT_secret);
+        const token=jwt.sign({userId},process.env.DATABASE_URL);
         return res.status(200).json({
             token:token
         })
