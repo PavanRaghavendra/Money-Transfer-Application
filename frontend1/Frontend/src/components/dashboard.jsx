@@ -40,7 +40,7 @@ function Balance()
     {
         async function balance()
         {
-            const response=await axios.get("https://money-wallet-api.vercel.app/api/accountdata/balance",
+            const response=await axios.get("https://money-transfer-application.vercel.app/api/accountdata/balance",
             {
                 headers:
                 {
@@ -69,7 +69,7 @@ function Users()
     {
         async function fetch()
         {
-            const response=await axios.get("https://money-wallet-api.vercel.app/api/user/bulk?filter="+filter);
+            const response=await axios.get("https://money-transfer-application.vercel.app/api/user/bulk?filter="+filter);
             setUsers(response.data.users);
         }
         fetch();
