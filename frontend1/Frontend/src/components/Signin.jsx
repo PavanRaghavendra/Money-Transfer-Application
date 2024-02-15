@@ -39,7 +39,7 @@ export function Signin()
             }}className="bg-black text-white w-full rounded-sm p-2 font-semibold hover:bg-gray-700">Sign in</button>
             <div className="flex flex-row justify-center mb-4 mt-2">
             <p>Don't have an account?</p>
-            <Link to="/Singup" className="underline cursor-pointer">Signup</Link>
+            <Link to="/Signup" className="underline cursor-pointer">Signup</Link>
             </div>
         </div>
         </div>
