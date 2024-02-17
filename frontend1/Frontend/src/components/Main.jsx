@@ -14,12 +14,10 @@ export function Main()
             <Link to={"/Signup"} className="text-white">Signup</Link>
             </div>
         </div>
-        <div className="flex justify-center items-center flex-row h-full p-5 sm:flex-row">
-            <div className="flex flex-col">
-            <p className="text-gray-500 text-6xl p-4">Pai Payments</p>
-        </div>
-        <Lottie  lottieRef={phone}animationData={animation}></Lottie>
-        </div>
+              <div className="flex justify-center items-center md:flex-row flex-col h-full p-5">
+          <p className="text-gray-500 md:text-6xl md:p-4 md:w-1/2 text-3xl p-5 w-1/2">Pai Payments</p>
+          <Lottie lottieRef={phone} animationData={animation} className="w-1/2"></Lottie>
+      </div>
     </div>
     </>
 }
