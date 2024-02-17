@@ -27,7 +27,7 @@ router.post("/Signup",Usermiddleware,database,async (req,res)=>{
             balance:1+Math.random()*10000
         }
     )
-    const token=jwt.sign({userId},process.env.Jwt_SECRET);
+    const token=jwt.sign({userId},process.env.JWT_SECRET);
     res.status(200).json(
         {
             message:"User Created Sucessfully",
@@ -64,7 +64,7 @@ router.post("/Signin",async (req,res)=>{
         if(isvalid)
         {
         const userId=exisitinguser._id;
-        const token=jwt.sign({userId},process.env.Jwt_SECRET);
+        const token=jwt.sign({userId},process.env.JWT_SECRET);
         return res.status(200).json({
             token:token
         })
