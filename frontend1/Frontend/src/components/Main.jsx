@@ -14,11 +14,11 @@ export function Main()
             <Link to={"/Signup"} className="text-white">Signup</Link>
             </div>
         </div>
-        <div className="flex justify-center items-center flex-row h-full p-5">
+        <div className="flex justify-center items-center flex-row h-full p-5 sm:flex-row">
             <div className="flex flex-col">
             <p className="text-gray-500 text-6xl p-4">Pai Payments</p>
         </div>
-        <Lottie lottieRef={phone}animationData={animation}></Lottie>
+        <Lottie  lottieRef={phone}animationData={animation}></Lottie>
         </div>
     </div>
     </>
