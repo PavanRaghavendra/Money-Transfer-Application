@@ -1,6 +1,7 @@
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import axios from "axios";
 import { useState } from 'react';
+import { backurl } from '../../url';
 
 export const SendMoney = () => {
     const [searchParams] = useSearchParams();
@@ -41,7 +42,7 @@ export const SendMoney = () => {
                     />
                     </div>
                     <button onClick={async () => {
-                       const response= await axios.post("https://money-transfer-application.vercel.app/api/accountdata/transfer", {
+                       const response= await axios.post(`${backurl}/api/accountdata/transfer`, {
                             to: id,
                             amount
                         }, {

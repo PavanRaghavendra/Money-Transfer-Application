@@ -2,6 +2,7 @@ import {Link} from 'react-router-dom'
 import { useState,useEffect } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { backurl } from '../../url'
 export function Dashboard()
 {
    return <>
@@ -40,7 +41,7 @@ function Balance()
     {
         async function balance()
         {
-            const response=await axios.get("https://money-transfer-application.vercel.app/api/accountdata/balance",
+            const response=await axios.get(`${backurl}/api/accountdata/balance`,
             {
                 headers:
                 {
@@ -69,7 +70,7 @@ function Users()
     {
         async function fetch()
         {
-            const response=await axios.get("https://money-transfer-application.vercel.app/api/user/bulk?filter="+filter);
+            const response=await axios.get(`${backurl}/api/user/bulk?filter=`+filter);
             setUsers(response.data.users);
         }
         fetch();

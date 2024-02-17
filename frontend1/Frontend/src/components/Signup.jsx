@@ -2,6 +2,7 @@ import { useState } from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { backurl } from '../../url';
 export function Signup()
 {
     const [firstname,setFirstname]=useState("");
@@ -37,7 +38,7 @@ export function Signup()
                 }}placeholder="" className="border border-black-500 rounded-sm w-full pl-2 pt-2 pb-1"></input>
                 <button onClick={ async ()=>
                 {
-                    const response=await axios.post("https://money-transfer-application.vercel.app/api/user/Signup",{
+                    const response=await axios.post(`${backurl}/api/user/Signup`,{
                             firstname,
                             lastname,
                             username,
