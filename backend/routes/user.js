@@ -145,9 +145,9 @@ router.get("/bulk", async (req, res) => {
 });
 router.get("/data",authmiddle,async (req,res)=>
 {
-    const userId=req.userid;
+    const userId=req.userId;
     try{
-        const user=await User.findOne({userid:userId});
+        const user=await User.findOne({userId:userId});
         res.json({name:(user.firstname)});
     }
     catch(error)
