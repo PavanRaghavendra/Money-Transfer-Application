@@ -143,4 +143,16 @@ router.get("/bulk", async (req, res) => {
         res.status(500).json({ message: "Internal Server Error" });
     }
 });
+router.get("/data",authmiddle,async (req,res)=>
+{
+    const userId=req.userid;
+    try{
+        const user=await User.findOne({userid:userId});
+        res.json({name:(user.firstname)});
+    }
+    catch(error)
+    {
+        return res.status(404).json({msg:"account not found"});
+    }
+})
 module.exports=router;

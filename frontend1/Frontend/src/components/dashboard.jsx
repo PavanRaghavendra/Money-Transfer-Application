@@ -6,31 +6,41 @@ import { backurl } from '../../url'
 export function Dashboard()
 {
    return <>
+   <div className='bg-babypink'>
    <Appbar></Appbar>
    <Balance></Balance>
    <Users></Users>
+   </div>
    </>
 }
 function Appbar()
 {
+    const [user,setuser]=useState("");
+    useEffect(()=>{
+        const response=axios.get(`${backurl}/api/user/data`,
+        {
+            headers:
+            {
+                authorization:localStorage.getItem("token")
+            }
+        })
+        setuser(response.data.name);
+    },[])
     const navigate=useNavigate();
-    return <div className="shadow h-14 flex justify-between">
+    return <div className="shadow h-14 flex justify-between bg-babypink">
     <div className="flex flex-col justify-center h-full ml-4">
-      <Link to="/dashboard">Pai-Payments App</Link>
+      <Link to="/dashboard" className='text-third text-xl font-bold'>Pai-Payments</Link>
     </div>
     <div className="flex">
-        <div className="flex flex-col justify-center h-full mr-4">
-            Hello,User
+        <div className="flex flex-col justify-center h-full mr-4 text-xl text-third">
+            Hello,{user}
         </div>
         <div className="rounded-full h-12 w-12 bg-slate-200 flex justify-center mt-1 mr-2">
             <div className="flex flex-col justify-center h-full text-xl">
-                U
+                {user[0]}
             </div>
         </div>
-        <div className='flex justify-center items-center gap-3'>
-            <button className='bg-gray-500 text-white text-lg rounded-sm' onClick={()=>navigate("/")}>SignUp</button>
-            <button className='bg-yellow-500 text-lg text-white rounded-sm' onClick={()=>navigate("/Signin")}>SignIn</button>
-        </div>
+
     </div>
 </div>
 }

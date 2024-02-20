@@ -11,7 +11,7 @@ export function Signin()
     return <>
     <div className=" bg-slate-500 h-screen flex justify-center">
     <div className="flex flex-col justify-center">
-        <div className=" bg-white w-80 h-max rounded-md p-2 text-center px-4">
+        <div className=" bg-babypink w-80 h-max rounded-md p-2 text-center px-4">
             <p className="text-2xl font-bold ">Sign in</p>
             <p className="text-center">Enter your credintals to access your <br></br>account</p>
            <form className="flex flex-col pb-3">
@@ -37,7 +37,7 @@ export function Signin()
                 });
                 localStorage.setItem("token",response.data.token);
                 navigate("/dashboard");
-            }}className="bg-black text-white w-full rounded-sm p-2 font-semibold hover:bg-gray-700">Sign in</button>
+            }}className="bg-third text-babypink w-full rounded-md p-2 font-semibold text-xl shadow-xl">Sign in</button>
             <div className="flex flex-row justify-center mb-4 mt-2">
             <p>Don't have an account?</p>
             <Link to="/Signup" className="underline cursor-pointer">Signup</Link>

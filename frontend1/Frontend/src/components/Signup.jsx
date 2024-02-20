@@ -13,7 +13,7 @@ export function Signup()
     return <>
     <div className="bg-slate-300 h-screen flex justify-center">
         <div className="flex flex-col justify-center">
-            <div className="rounded-lg bg-white w-80 text-center p-2 h-max px-4">
+            <div className="rounded-lg bg-babypink w-80 text-center p-2 h-max px-4">
             <p className="text-center text-2xl pt-3 font-bold">Sign Up</p>
             <p className="text-center">Enter your information to create an <br></br>account</p>
             <p className="text-left pb-1 font-semibold">First Name</p>
@@ -47,10 +47,10 @@ export function Signup()
                     )
                     localStorage.setItem("token",response.data.token);
                     navigate('/dashboard')
-                }}type="button" className="my-2 text-white bg-gray-800 hover:bg-gray-900  font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 w-full">Sign Up</button>
+                }}type="button" className="bg-third my-2 text-white bg-gray-800 font-medium rounded-lg text-xl px-5 py-2.5 me-2 mb-2 w-full">Sign Up</button>
                <div className="flex justify-center mb-4 mt-2">
                 <p className="">Already have an account?</p>
-                <Link to={"/Signin"} className="underline cursor-pointer">Login</Link>
+                <Link to={"/Signin"} className="underline cursor-pointer text-third font-bold">Login</Link>
                 </div>
             </div>
         </div>
