@@ -17,30 +17,34 @@ function Appbar()
 {
     const [user,setuser]=useState("");
     useEffect(()=>{
-        const response=axios.get(`${backurl}/api/user/data`,
+       async function data()
+        {
+        const response=await axios.get(`${backurl}/api/user/data`,
         {
             headers:
             {
                 authorization:localStorage.getItem("token")
             }
         })
-        setuser(response.data.name);
+        const name=response.data.name;
+        setuser(name);
+    }
+    data()
     },[])
     const navigate=useNavigate();
     return <div className="shadow h-14 flex justify-between bg-babypink">
     <div className="flex flex-col justify-center h-full ml-4">
       <Link to="/dashboard" className='text-third text-xl font-bold'>Pai-Payments</Link>
     </div>
-    <div className="flex">
-        <div className="flex flex-col justify-center h-full mr-4 text-xl text-third">
-            Hello,{user}
+    <div className="flex justify-center items-center">
+        <div className="text-xl mr-3">
+            Hello,<span className='text-third'>{user}</span>
         </div>
-        <div className="rounded-full h-12 w-12 bg-slate-200 flex justify-center mt-1 mr-2">
-            <div className="flex flex-col justify-center h-full text-xl">
+        <div className="text-center border border-second bg-second rounded-full p-1">
+            <div className="text-xl text-third">
                 {user[0]}
             </div>
         </div>
-
     </div>
 </div>
 }
@@ -58,16 +62,20 @@ function Balance()
                     authorization:localStorage.getItem("token")
                 }
             })
-            setbalance(response.data.balance);
+            let data=response.data.balance;
+            data=Math.round(data);
+            setbalance(data);
         }
         balance();
     },[])
-    return <div className="flex flex-row h-20 justify-center items-center shadow-md">
-        <div className="ml-3 font-semibold">
+    return <div className="flex h-40 shadow-md   items-center justify-center">
+        <div className='w-60 h-20   flex justify-center items-center bg-second text-third rounded-md'>
+        <div className="ml-3 font-semibold ">
             Your Balance
         </div>
-        <div className="font-semibold ml-4">
-            {balance}
+        <div className="font-semibold ml-4 ">
+            Rs.{balance}.00/-
+        </div>
         </div>
     </div>
 }
@@ -86,13 +94,13 @@ function Users()
         fetch();
     },[filter]);
     return <>
-       <div className="font-bold mt-6 text-lg">
+       <div className="font-bold m-6 text-xl text-center text-third">
             users
         </div>
-        <div className="my-2">
+        <div className="m-2 mb-4 shadow-lg">
             <input onChange={(e) => {
                 setFilter(e.target.value)
-            }} type="text" placeholder="Search users..." className="w-full px-2 py-1 border rounded border-slate-200"></input>
+            }} type="text" placeholder="Search users..." className="w-full p-3 border rounded-md "></input>
         </div>
         <div>
         {users.map(user => <User key={user._id} user={user} />)}
@@ -105,9 +113,9 @@ function User({key,user}) {
     const navigate = useNavigate();
 
     return <div className="flex justify-between">
-        <div className="flex">
-            <div className="rounded-full h-12 w-12 bg-slate-200 flex justify-center mt-1 mr-2">
-                <div className="flex flex-col justify-center h-full text-xl">
+        <div className="flex justify-center items-center gap-2">
+            <div className="h-6 w-6 text-center">
+                <div className="flex flex-col justify-center h-full text-xl border border-second p-3  items-center text-third  rounded-full">
                     {user.firstname[0]}
                 </div>
             </div>
@@ -117,7 +125,7 @@ function User({key,user}) {
                 </div>
             </div>
         </div>
-        <div className="flex flex-col justify-center h-ful">
+        <div className="flex flex-col justify-center text-third border border-second mb-3 rounded-md bg-second p-2">
             <button onClick={() => {
                 navigate("/Sendmoney?id=" + user._id + "&name=" + user.firstname);
             }}>Send Money</button>
