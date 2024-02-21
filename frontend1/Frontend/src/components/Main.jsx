@@ -33,7 +33,7 @@ export function Main()
        </div>
        </div>
         <div className="flex justify-center md:w-1/2 md:h-1/3 md:mr-10 md:mb-4">
-            <img src="./dWebOld.png"></img>
+            <img src="https://cdn.razorpay.com/growth/NaMfc4InLbTt0F/dWebOld.png"></img>
        </div>
     </div>
     </div>
