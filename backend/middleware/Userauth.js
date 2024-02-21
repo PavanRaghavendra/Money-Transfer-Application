@@ -1,7 +1,7 @@
 
 const jwt=require("jsonwebtoken");
 require("dotenv").config();
-const authmiddle=(async (req,res,next)=>
+const userauth=(async (req,res,next)=>
 {
     const authToken = req.headers.authorization; 
     if(authToken)
@@ -9,8 +9,8 @@ const authmiddle=(async (req,res,next)=>
         const token = authToken;
        // console.log(token);
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.userid = decoded.Id;
-        //console.log(req.userid);
+        req.userId = decoded.userId;
+        //console.log(req.userId);
         next();
     }
     else
@@ -18,4 +18,4 @@ const authmiddle=(async (req,res,next)=>
         res.status(403).json({msg: "Authentication failed"});
     }
 })
-module.exports=authmiddle;
+module.exports=userauth;

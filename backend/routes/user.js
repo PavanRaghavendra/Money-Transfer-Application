@@ -7,7 +7,7 @@ const Usermiddleware=require("../middleware/Middlewares");
 const database=require("../middleware/Database")
 const {User}=require("../Database/db");
 const {Account}=require("../Database/db");
-const authmiddle = require("../middleware/Authmiddle");
+const userauth = require("../middleware/Userauth");
 require('dotenv').config();
 const app=express();
 app.use(express.json());
@@ -143,11 +143,11 @@ router.get("/bulk", async (req, res) => {
         res.status(500).json({ message: "Internal Server Error" });
     }
 });
-router.get("/data",authmiddle,async (req,res)=>
+router.get("/data",userauth,async (req,res)=>
 {
     const userId=req.userId;
     try{
-        const user=await User.findOne({userId:userId});
+        const user= await User.findOne({_id:userId});
         res.json({name:(user.firstname)});
     }
     catch(error)
