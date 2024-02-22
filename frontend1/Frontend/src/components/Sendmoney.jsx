@@ -2,13 +2,14 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import axios from "axios";
 import { useState } from 'react';
 import { backurl } from '../../url';
-
+import {Popup} from "./Popup"
 export const SendMoney = () => {
     const [searchParams] = useSearchParams();
     const id = searchParams.get("id");
     const name = searchParams.get("name");
     const [amount, setAmount] = useState(0);
     const navigation=useNavigate();
+    let timeout;
     return <div className="flex justify-center h-screen bg-gray-100 bg-babypink">
         <div className="h-full flex flex-col justify-center">
             <div
@@ -33,7 +34,12 @@ export const SendMoney = () => {
                     </label>
                     <input
                         onChange={(e) => {
-                            setAmount(e.target.value);
+                        clearTimeout(timeout);
+                          timeout= setTimeout(()=>
+                            {
+                                setAmount(e.target.value);
+                            },1000);
+                           
                         }}
                         type="number"
                         className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
@@ -42,6 +48,7 @@ export const SendMoney = () => {
                     />
                     </div>
                     <button onClick={async () => {
+                        try{
                        const response= await axios.post(`${backurl}/api/accountdata/transfer`, {
                             to: id,
                             amount
@@ -52,14 +59,27 @@ export const SendMoney = () => {
                         });
                         if(response.data.message==="Transfer successful")
                         {
-                            setTimeout(()=>
-                            {
-                                alert("Transfer Successful");
-                            },2000)
+                            Popup({title:"success",text:"Transfer successful",icon:"success"});
                             navigation("/dashboard");
                         }
-                        else{
-                            alert("Transfer Unsuccessful");
+                    }
+                        catch(error)
+                        {
+                            if(error.response)
+                            {
+                                Popup({title:"error",text:"Transfer Unsuccessful",icon:"error"});
+                                navigation("/dashboard");
+                            }
+                            else if(error.request)
+                            {
+                                Popup({title:"error",text:"Transfer Unsuccessful",icon:"error"});
+                                navigation("/dashboard");
+                            }
+                            else 
+                            {
+                                Popup({title:"error",text:"Transfer Unsuccessful",icon:"error"});
+                                navigation("/dashboard");
+                            }
                         }
                     }} className="justify-center rounded-md text-md font-medium ring-offset-background transition-colors h-10 px-4 py-2 w-full bg-second text-third">
                         Initiate Transfer

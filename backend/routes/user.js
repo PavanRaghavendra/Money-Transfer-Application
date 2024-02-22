@@ -12,6 +12,7 @@ require('dotenv').config();
 const app=express();
 app.use(express.json());
 router.post("/Signup",Usermiddleware,database,async (req,res)=>{
+    try{
     const password=req.body.password;
     const hash = await bcrypt.hash(password,10);
     const user=await User.create({
@@ -34,6 +35,15 @@ router.post("/Signup",Usermiddleware,database,async (req,res)=>{
             token:token
         }
     )
+    }
+    catch(error)
+    {
+        res.status(404).json(
+            {
+                message:"unsucessfull"
+            }
+        )
+    }
 });
 const siginbody=zod.object(
     {
@@ -121,8 +131,8 @@ router.put("/update",async (req,res)=>
     )
 });
 router.get("/bulk", async (req, res) => {
-    const filter = req.query.filter || "";
-    
+    const filter = req.query.filter;
+   
     try {
         const users = await User.find({
             "$or": [

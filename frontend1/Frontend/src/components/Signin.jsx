@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { backurl } from "../../url";
+import { Popup } from "./Popup";
 export function Signin()
 {
     const [username,setusername]=useState("");
@@ -30,13 +31,30 @@ export function Signin()
             </form>
             <button  onClick={async ()=>
             {
+                try{
                 const response=await axios.post(`${backurl}/api/user/Signin`,
                 {
                     username,
                     password
                 });
                 localStorage.setItem("token",response.data.token);
+                Popup({title:"Success",text:"Signin Successfully",icon:"success"});
                 navigate("/dashboard");
+            }
+            catch(error)
+            {
+                if(error.response)
+                {
+                    Popup({title:"error",text:"Enter Valid Credentials",icon:"error"});
+                }
+                else if(error.request)
+                {
+                    Popup({title:"error",text:"Enter Valid Credentials",icon:"error"});
+                }
+                else{
+                    Popup({title:"error",text:"Enter Valid Credentials",icon:"error"});
+                }
+            }
             }}className="bg-third text-babypink w-full rounded-md p-2 font-semibold text-xl shadow-xl">Sign in</button>
             <div className="flex flex-row justify-center mb-4 mt-2">
             <p>Don't have an account?</p>

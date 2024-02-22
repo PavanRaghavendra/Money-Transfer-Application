@@ -31,7 +31,6 @@ function Appbar()
     }
     data()
     },[])
-    const navigate=useNavigate();
     return <div className="shadow h-14 flex justify-between bg-babypink">
     <div className="flex flex-col justify-center h-full ml-4">
       <Link to="/dashboard" className='text-third text-xl font-bold'>Pai-Payments</Link>
@@ -40,10 +39,11 @@ function Appbar()
         <div className="text-xl mr-3">
             Hello,<span className='text-third'>{user}</span>
         </div>
-        <div className="text-center border border-second bg-second rounded-full p-1">
-            <div className="text-xl text-third">
-                {user[0]}
-            </div>
+        <div className="w-10 h-10 rounded-full bg-second flex items-center justify-center">
+                    <span className="text-2xl text-third">{user[0]}</span>
+                    </div>
+        <div>
+            <Link to={"/"} className='cursor-pointer text-xl ml-2 p-1 rounded-md font-bold text-third underline hover:bg-second'>Logout</Link>
         </div>
     </div>
 </div>
@@ -93,13 +93,19 @@ function Users()
         }
         fetch();
     },[filter]);
+    let timeout
     return <>
        <div className="font-bold m-6 text-xl text-center text-third">
             users
         </div>
         <div className="m-2 mb-4 shadow-lg">
             <input onChange={(e) => {
-                setFilter(e.target.value)
+                clearTimeout(timeout);
+               timeout= setTimeout(()=>
+                {
+                    setFilter(e.target.value)
+                },1000)
+             
             }} type="text" placeholder="Search users..." className="w-full p-3 border rounded-md "></input>
         </div>
         <div>

@@ -9,7 +9,7 @@ const authmiddle=(async (req,res,next)=>
         const token = authToken;
        // console.log(token);
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.userid = decoded.Id;
+        req.userid = decoded.userId;
         //console.log(req.userid);
         next();
     }

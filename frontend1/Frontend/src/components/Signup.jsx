@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { backurl } from '../../url';
+import { Popup } from './Popup';
 export function Signup()
 {
     const [firstname,setFirstname]=useState("");
@@ -38,6 +39,7 @@ export function Signup()
                 }}placeholder="" className="border border-black-500 rounded-sm w-full pl-2 pt-2 pb-1"></input>
                 <button onClick={ async ()=>
                 {
+                    try{
                     const response=await axios.post(`${backurl}/api/user/Signup`,{
                             firstname,
                             lastname,
@@ -45,9 +47,22 @@ export function Signup()
                             password
                         }
                     )
-                    localStorage.setItem("token",response.data.token);
-                    navigate('/dashboard')
-                }}type="button" className="bg-third my-2 text-white bg-gray-800 font-medium rounded-lg text-xl px-5 py-2.5 me-2 mb-2 w-full">Sign Up</button>
+                        localStorage.setItem("token",response.data.token);
+                        Popup({ title: "success", text: "Signup Successfully", icon: "success" })
+                        navigate("/dashboard");
+                    }
+                    catch(error)
+                    {
+                        if (error.response) {
+                            Popup({ title: "Error", text: "Enter vaild inputs", icon: "error" });
+                        } else if (error.request) {
+                            Popup({ title: "Error", text: "Enter vaild inputs", icon: "error" });
+                        } else {
+                            Popup({ title: "Error", text: "Enter vaild inputs", icon: "error" });
+                        }
+                    }
+                    }
+                }type="button" className="bg-third my-2 text-white bg-gray-800 font-medium rounded-lg text-xl px-5 py-2.5 me-2 mb-2 w-full">Sign Up</button>
                <div className="flex justify-center mb-4 mt-2">
                 <p className="">Already have an account?</p>
                 <Link to={"/Signin"} className="underline cursor-pointer text-third font-bold">Login</Link>
